@@ -1,21 +1,22 @@
-let liList = ["Eat", "Drink", "Sleep"];
-let sList = liList.map(function(li) {
-    return '<li><span><i class="fa fa-trash"></i></span>' + li + "</li>";
-});
-function keyupfunct(event) {
+const liList = [];
+let listToShow = null;
+const removeValue = event => {
+    liList.splice(+event.target.id, 1);
+    writeInHtml();
+};
+const writeInHtml = () => {
+    listToShow = liList.map((li, index) => `<li><span class="trash"><i class="fa fa-trash" id=${index}></i></span>${li}</li>`);
+    document.querySelector("#myList").innerHTML = listToShow.join(" ");
+    document.querySelectorAll(".trash").forEach(item => {
+        item.addEventListener("click", removeValue);
+    });
+};
+const keyUpFunc = event => {
     if (event.keyCode === 13) {
         liList.push(event.target.value);
-        sList = liList.map(function(li) {
-            return '<li><span><i class="fa fa-trash"></i></span>' + li + "</li>";
-        });
-        document.querySelector("#ulElem").innerHTML = sList.join(" ");
+        writeInHtml();
         document.querySelector("#addToDo").value = "";
     }
-}
-console.log(sList);
-document.querySelector("#ulElem").innerHTML = sList.join(" ");
-document.querySelector("#addToDo").addEventListener("keyup", keyupfunct);
-document.querySelector("li").addEventListener("click", keyupfunct);
-// liList.map(function(li) {
-//  document.querySelector("#ulElem").innerHTML = li;
-// });
+};
+document.querySelector("#addToDo").addEventListener("keyup", keyUpFunc);
+
