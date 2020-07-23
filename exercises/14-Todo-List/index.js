@@ -1,6 +1,7 @@
 const liList = [];
 let listToShow = null;
 const removeValue = event => {
+    console.log(event);
     liList.splice(+event.target.id, 1);
     writeInHtml();
 };
